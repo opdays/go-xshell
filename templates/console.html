@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!--http://designmodo.github.io/Flat-UI/docs/components.html#fui-navbar-->
+    <link rel="stylesheet" href="/static/xterm/flat-ui/css/vendor/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/xterm/xterm.css"/>
+
+    <link rel="stylesheet" href="/static/xterm/flat-ui/css/flat-ui.css"/>
+    <link rel="stylesheet" href="/static/css/custom.css"/>
+    <script src="/static/xterm/jquery/jquery-3.1.1.min.js"></script>
+    <script src="/static/xterm/flat-ui/js/flat-ui.js"></script>
+    <script src="/static/xterm/xterm.js"></script>
+    <link rel="stylesheet" href="/static/xterm/addons/fullscreen/fullscreen.css"/>
+    <script src="/static/xterm/addons/fullscreen/fullscreen.js"></script>
+    <script src="/static/xterm/addons/attach/attach.min.js"></script>
+    <script src="/static/xterm/addons/fit/fit.js"></script>
+    <script src="/static/js/custom.js"></script>
+</head>
+<body style="background-color: #000000">
+<div class="container">
+    <div class="console-login-container">
+        <div><h5>登录云服务器</h5></div>
+        <div class="form-container">
+            <div class="form-group">
+                <input class="form-control" type="text" disabled placeholder="user" name="ip">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" placeholder="user" name="user">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" placeholder="password" name="password">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-inverse btn-block login-console">登录</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="terminal-container"></div>
+<div class="operate-tool">
+
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">模态框（Modal）标题</h4>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary submit">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+</body>
+<script>
+    function GetQueryString(name) {
+        //https://www.cnblogs.com/fishtreeyu/archive/2011/02/27/1966178.html
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null)return unescape(r[2]);
+        return null;
+    }
+    $(function () {
+        var OpenTerminalWithKey = function (key) {
+            var containerWidth = window.screen.height;
+            var containerHeight = window.screen.width;
+            //办公司电脑宽高
+
+            var url = (location.protocol === "http:" ? "ws" : "wss") + "://" + location.host + "/console/Ws";
+            var cols = Math.floor((containerWidth - 30) / 9); //根据容器的宽高计算xterm的字符个数 然后请求终端
+            var rows = Math.floor(containerHeight / 17);
+            cols = Math.floor((document.body.clientWidth - 30) / 9);
+            rows = Math.floor(window.innerHeight / 17);
+            var getArgs = $.param({
+                cols: cols,
+                rows: rows,
+                key: key,
+            });
+            url = url + "?" + getArgs;
+            /*
+             var DEFAULT_OPTIONS = {
+             convertEol: false,
+             termName: 'xterm',
+             geometry: [80, 24],
+             cursorBlink: false,
+             cursorStyle: 'block',
+             bellSound: Sounds_1.BellSound,
+             bellStyle: 'none',
+             enableBold: true,
+             fontFamily: 'courier-new, courier, monospace',
+             fontSize: 15,
+             lineHeight: 1.0,
+             letterSpacing: 0,
+             scrollback: 1000,
+             screenKeys: false,
+             debug: false,
+             cancelEvents: false,
+             disableStdin: false,
+             useFlowControl: false,
+             tabStopWidth: 8,
+             theme: null
+             };
+             */
+            var term = new Terminal({
+                cursorBlink: false,  // Do not blink the terminal's cursor
+                cols: cols,  // Set the terminal's width to 120 columns
+                rows: rows,  // Set the terminal's height to 80 rows
+                //https://github.com/xtermjs/xterm.js/issues/1004
+                //fontSize: 20
+            });
+
+            var termContainer = document.getElementById('terminal-container');
+
+            term.WsOpen({
+                url: url,
+                container: termContainer
+            });
+            window.oneTerm = term;
+            term.ExtSetBackGroundColor('#25292f'); //github头颜色
+            term.toggleFullscreen();
+            term.focus();
+        };
+        var OpenTerminal = function (ip, user, password) {
+            const keyApi = "/console/aesEn";
+            $.ajax({
+                url: keyApi,
+                type: "post",
+                data: {
+                    text: ip + "::" + user + "::" + password,
+                },
+                success: function (key) {
+                    OpenTerminalWithKey(key);
+                }
+            });
+        };
+        var consoleLogin = $(".login-console");
+        var ipInput = $("input[name=ip]");
+        ipInput.val(GetQueryString("ip"));
+        var userInput = $("input[name=user]");
+        var passwordInput = $("input[name=password]");
+        passwordInput.keydown(function (event) {
+            if (event.keyCode === 13) {
+                consoleLogin.click();
+            }
+        });
+        consoleLogin.click(function () {
+            var ip = ipInput.val();
+            var user = userInput.val();
+            var password = passwordInput.val();
+            if (ip === "" || user === "" || password === "") {
+                layer.msg("请输入完整信息");
+                return
+            }
+            OpenTerminal(ip, user, password);
+            document.title = ip;
+            $(".console-login-container").hide();
+            var operateTool = $(".operate-tool");
+            operateTool.addClass("operate-tool-show").click(function () {
+                var modal = $("#myModal");
+                modal.find(".modal-title").html("terminal tool");
+                var goTop = '<button class="btn btn-inverse">返回顶部</button>';
+                var goBottom = '<button class="btn btn-inverse">返回底部</button>';
+                var reSize = '<button class="btn btn-primary">重置大小</button>';
+                var body = modal.find(".modal-body");
+                body.html("");
+                $(goTop).click(function () {
+                    oneTerm && oneTerm.scrollToTop();
+                }).appendTo(body);
+                $(goBottom).click(function () {
+                    oneTerm && oneTerm.scrollToBottom();
+                }).appendTo(body);
+                $(reSize).click(function () {
+                    var cols = Math.floor((document.body.clientWidth - 30) / 9);
+                    var rows = Math.floor(window.innerHeight / 17);
+                    oneTerm && oneTerm.ExtResize(cols, rows);
+                }).appendTo(body);
+                modal.modal();
+            });
+        });
+    });
+</script>
+</html>

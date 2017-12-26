@@ -1,0 +1,149 @@
+.one-terminal-container {
+    background-color: #000000;
+    padding: 5px 5px;
+    border-radius: 5px;
+    /*width: 1446px;
+    height: 773px;
+    */
+    width: 1284px;
+}
+
+
+
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+.xterm-viewport::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+    background-color: #F5F5F5;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+.xterm-viewport::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+
+/*定义滑块 内阴影+圆角*/
+.xterm-viewport::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #555;
+}
+
+ul.chajian {
+    margin: 2em auto;
+    background: #34495e;
+    list-style: none;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    max-height: 580px;
+    overflow-y: auto;
+}
+
+ul.chajian > li {
+    color: #fff;
+    background: #34495e;
+    padding: 1em;
+    border-bottom: 0.5em solid #2c3e50;
+    margin-top: 0.25em;
+    border-left: 0.5em groove #e74c3c;
+    cursor: pointer;
+    transition: 0.4s all;
+    position: relative;
+}
+
+.chajian span {
+    position: absolute;
+    right: 17px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+}
+
+.chajian .active {
+    border-left: 0.5em groove #1abc9c;
+}
+
+.chajian li:hover {
+    background: #2c3e50;
+    border-left: 0.5em groove #1abc9c;
+}
+
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+.chajian::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+    background-color: #F5F5F5;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+.chajian::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+
+/*定义滑块 内阴影+圆角*/
+.chajian::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #555;
+}
+
+.fixed-table-body::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px #1abc9c;
+    background-color: #1abc9c;
+}
+
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+.fixed-table-body::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+    background-color: #F5F5F5;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+.fixed-table-body::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px #1abc9c;
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+
+.console-login-container {
+    position: absolute;
+    width: 363px;
+    height: 430px;
+    background-color: #fff;
+    padding: 50px 50px;
+    left: 50%;
+    border-radius: 10px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.console-login-container h5 {
+    text-align: center;
+}
+
+.form-container {
+}
+
+.operate-tool {
+    background-color: #eee;
+    border-radius: 100%;
+    bottom: 10%;
+    height: 48px;
+    position: fixed;
+    right: -100px;
+    width: 48px;
+    transition: 0.5s;
+    cursor: pointer;
+    -webkit-transition: 0.5s;
+    z-index: 100000;
+}
+
+.operate-tool-show {
+    right: 12px;
+}

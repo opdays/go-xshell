@@ -1,0 +1,109 @@
+#open,#resize,#close,#go-down,#go-top{
+    margin-top: 10px;
+}
+.one-terminal-container{
+    background-color: #000000;
+    padding: 5px 5px;
+    border-radius: 5px;
+    width: 1260px;
+    height: 618px;
+}
+
+.login-tab{
+    position: absolute;
+    width: 230px;
+    height: 200px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+.login-message{
+    margin-top: 73px;
+}
+.login-title{
+    position: absolute;
+    left: 50%;
+    top: 21%;
+    transform: translate(-50%,0%);
+}
+#connect-list{
+    width: 90%;
+    position: absolute;
+    top: 170px;
+    background-color: #fff;
+    list-style: none;
+    max-height: 191px;
+    overflow-y: auto;
+}
+#connect-list::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #D94240;
+}
+#connect-list::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #FFF;
+}
+#connect-list::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+    background-color: #FFF;
+}
+#connect-list li{
+    position: relative;
+    height: 32px;
+    line-height: 32px;
+    padding: 0 15px;
+    font-size: 12px;
+    transition: 0.2s;
+    overflow: hidden;
+    left: -50px;
+    width: 230px;
+}
+#connect-list li:hover{
+    background-color: #E9E9E9;
+}
+#connect-list li .connect-sign{
+    width: 13px;
+    height: 22px;
+    position: absolute;
+    left: 0;
+    top: 5px;
+    background-color: #2ECC71;
+    display: none;
+}
+#connect-list li .connect-switch{
+    cursor: pointer;
+    width: 103px;
+}
+#connect-list li .connect-close{
+    position: absolute;
+    right: 0px;
+    width: 20px;
+    height: 20px;
+    top: 6px;
+    /*background-color: #E74C3C;*/
+
+    /*border-radius: 10px;*/
+}
+#connect-list li .connect-close i{
+    position: absolute;
+    left: -11px;
+    bottom: -6px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.current-li{
+    background-color: #7F8C8D;
+}
+
+#connect-list .btn.btn-danger{
+    margin-left: 10px;
+}
+
+.control-container{
+    position: relative;
+    top: 270px;
+}
