@@ -1,3 +1,7 @@
 /vendor/*
 !/vendor/vendor.json
 .idea
+*.gz
+*.zip
+*.exe
+go-xshell
