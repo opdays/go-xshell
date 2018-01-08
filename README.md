@@ -54,5 +54,15 @@ go build
 
 vim截图
 
+![vim截图](https://github.com/yy584089958/go-xshell/raw/master/screenshot/console-vim.png)
+
+如何嵌入其他运维系统
+
+一个按钮的click事件如下：
+```javascript
+windown.open("http://127.0.0.1:18080/console/ip=x.x.x.x","_blank","height=400, width=800,top=100px,left=100px");
+```
+
+
 
 
